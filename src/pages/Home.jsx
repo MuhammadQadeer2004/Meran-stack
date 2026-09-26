@@ -1,8 +1,45 @@
+import { useState, useEffect } from "react";
+import api from "../api/axios";
+import { Link } from "react-router";
+
 export default function Home() {
+  const [products, setProducts] = useState([]);
+  const [search, setSearch] = useState("");
+  const [category, setCategory] = useState("");
+
+  const loadProducts = async () => {
+    const res = await api.get(`/products?search=${search}&category=${category}`);
+    setProducts(res.data);
+  }
+
+  useEffect(() => {
+    loadProducts();
+  }, [search, category]);
+
   return (
-    <div>
-      <h1>Welcome to the Home Page</h1>
-      {/* Add more content or components as needed */}
+    <div className="p-6">
+      {/* Search */}
+      <div className="mb-4 flex gap-3">
+        <input
+          placeholder="search Products.."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="border px-3 py-2 rounded w-1/2"
+        />
+
+        {/* Category Filter */}
+
+        <select
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+          className="border px-3 py-2 rounded"
+        >
+          <option value="">All Categories</option>
+          <option value="Laotop">Laptops</option>
+          <option value="Mobiles">Mobiles</option>
+          <option value="Tablets">Tablets</option>
+        </select>
+      </div>
     </div>
-  );
+  )
 }
