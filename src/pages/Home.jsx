@@ -35,10 +35,27 @@ export default function Home() {
           className="border px-3 py-2 rounded"
         >
           <option value="">All Categories</option>
-          <option value="Laotop">Laptops</option>
+          <option value="Laptop">Laptops</option>
           <option value="Mobiles">Mobiles</option>
           <option value="Tablets">Tablets</option>
         </select>
+      </div>
+      {/* Product Grid */}
+
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
+        {products.map((product)=>(
+          <Link 
+          key = {product._id}
+          to = {`/product/${product._id}`}
+          className="border rounded p-3 shadow hover:shadow-lg transition">
+            <img 
+            src={product.image} 
+            alt={product.title}
+            className="w-full h-40 object-contain bg-white rounded" />
+            <h2 className="mt-2 font-semibold text-lg">{product.title}</h2>
+            <p className="text-gray-600">${product.price}</p>
+          </Link>
+        ))}
       </div>
     </div>
   )
